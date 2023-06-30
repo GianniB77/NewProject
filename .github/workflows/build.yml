@@ -1,0 +1,22 @@
+name: Build NewProject
+on:
+  push: 
+      branches: 
+        - main
+jobs:
+  DockerImage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker BUILDX docker buildx
+        uses: docker/setup-qemu-action@v2
+      - name: Create Docker Images and Push
+        uses: docker/build-push-action@v4
+        with:
+          file: deploy/prod/Dockerfile
+          context: src
+          platforms: linux/amd64, linux/arm64, darwin/arm64, darwin/amd64
+      
